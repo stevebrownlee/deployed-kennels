@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import "./AnimalForm.css"
 import AnimalRepository from "../../repositories/AnimalRepository";
 
@@ -10,6 +10,16 @@ export default (props) => {
     const [employees, setEmployees] = useState([])
     const [employeeId, setEmployeeId] = useState(0)
     const [saveEnabled, setEnabled] = useState(false)
+
+    const fetchEmployees = async () => {
+	const response = await fetch("https://kennelapi.nss.team/users?employee=true")
+	const employees = await response.json()
+	setEmployees(employees)
+    }
+
+    useEffect(() => {
+	fetchEmployees()
+    }, [])
 
     const constructNewAnimal = evt => {
         evt.preventDefault()
