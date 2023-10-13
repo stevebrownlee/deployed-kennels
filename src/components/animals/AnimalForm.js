@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
+import { useHistory } from "react-router-dom"
 import "./AnimalForm.css"
 import AnimalRepository from "../../repositories/AnimalRepository";
 
@@ -10,6 +11,8 @@ export default (props) => {
     const [employees, setEmployees] = useState([])
     const [employeeId, setEmployeeId] = useState(0)
     const [saveEnabled, setEnabled] = useState(false)
+
+    const history = useHistory()
 
     const fetchEmployees = async () => {
 	const response = await fetch("https://kennelapi.nss.team/users?employee=true")
@@ -38,7 +41,7 @@ export default (props) => {
 
             AnimalRepository.addAnimal(animal)
                 .then(() => setEnabled(true))
-                .then(() => props.history.push("/animals"))
+                .then(() => history.push("/animals"))
         }
     }
 
